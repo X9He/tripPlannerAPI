@@ -3,7 +3,7 @@ require 'http'
 
 module GenerateTrip
   def self.generate_trip(locations)
-    key = 'GFCgDDLXoK4wA1zqapmAXlVAR3MQIY6k'
+    key = ''
     res = HTTP.get("http://www.mapquestapi.com/directions/v2/optimizedroute?key=#{key}&json={'locations':['Denver,CO','Westminster,CO','Boulder,CO']}")
     puts 'stuff'
     res = JSON.parse(res.to_s)
