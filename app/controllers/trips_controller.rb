@@ -1,5 +1,3 @@
-require 'app/modules/GenerateTrip'
-
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :update, :destroy]
 
