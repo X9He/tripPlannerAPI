@@ -1,17 +1,23 @@
-module MST
+module TSP
   def self.get_travel_time(hash_of_routes, route, starting_address)
-    start_cost = hash_of_routes[starting_address + route[0]]
-    end_cost = hash_of_routes[route[0] + starting_address]
+    puts 'printing the stuff in get_travel_time'
+    puts starting_address, route[0]
+    from_start_to_next = starting_address + route[0]
+    from_end_to_start = route[-1] + starting_address
+    puts hash_of_routes
+    start_cost = hash_of_routes[from_start_to_next]
+    end_cost = hash_of_routes[from_end_to_start]
     total_cost = start_cost + end_cost
     route.each_with_index do |loc, pos|
       if pos < route.length - 1
-        total_cost += hash_of_routes[loc + route[pos + 1]]
+        current_leg = loc + route[pos + 1]
+        total_cost += hash_of_routes[current_leg]
       end
     end
     total_cost
   end
 
-  def self.do_MST(hash_of_routes, tourist_locations, starting_address)
+  def self.solve_tsp(hash_of_routes, tourist_locations, starting_address)
     temperature = 15_000
     while temperature > 0.1
       new_locations = tourist_locations

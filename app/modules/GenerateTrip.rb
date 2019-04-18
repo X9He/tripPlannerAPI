@@ -1,13 +1,11 @@
 require 'rubygems'
 require 'http'
-require_relative 'MST'
-require_relative '../modules/MST'
+require_relative 'TSP'
 
 module GenerateTrip
   def self.generate_trip(locations)
     starting_address = locations['startingAddress']
     tourist_locations = locations['touristLocations']
-    puts "derp saucea"
     puts tourist_locations
     tourist_locations.push(starting_address)
     routes_hash = Hash.new()
@@ -20,15 +18,21 @@ module GenerateTrip
 
         puts loc1, loc2
         puts i, j
-        tourist_locations_i_escaped = tourist_locations[i].gsub!(/\s/, '%20')
-        tourist_locations_j_escaped = tourist_locations[j].gsub!(/\s/, '%20')
+        tourist_locations_i_escaped = tourist_locations[i]
+        tourist_locations_i_escaped.gsub!(/\s/, '')
+        tourist_locations_j_escaped = tourist_locations[j]
+        tourist_locations_j_escaped.gsub!(/\s/, '')
+        puts 'tourist_locations_i_escaped is ' + tourist_locations_i_escaped
+        puts 'tourist_locations_j_escaped is ' + tourist_locations_j_escaped
         # request_url = "http://www.mapquestapi.com/directions/v2/optimizedroute?key=#{key}&json={\"locations\":[\"#{tourist_locations_i_escaped}\", \"#{tourist_locations_j_escaped}\"]}"
 
-        # puts request_url
         # res = HTTP.get(request_url)
         res = HTTP.get("http://www.mapquestapi.com/directions/v2/optimizedroute",
-                       :params => {:key => key,
-                                   json: "{locations:[#{tourist_locations_i_escaped}, #{tourist_locations_j_escaped}]}"})
+                       :params => {:key => key},
+                       :json => {
+                          :locations => [tourist_locations_i_escaped, tourist_locations_j_escaped]
+                       }
+        )
         res = JSON.parse(res.to_s)
         puts res
         puts res['route']['realTime']
@@ -38,7 +42,7 @@ module GenerateTrip
       end
     end
     tourist_locations.pop
-    MST.do_MST(routes_hash, tourist_locations, starting_address)
-      # puts locations_hash
+    result = TSP.solve_tsp(routes_hash, tourist_locations, starting_address)
+    result.push(starting_address)
   end
 end

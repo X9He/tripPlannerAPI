@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../modules/GenerateTrip'
 
 class GenController < ApplicationController
@@ -5,6 +7,7 @@ class GenController < ApplicationController
   def generate
     puts 'in generate'
     locations = JSON.parse(request.body.string)['locations']
-    GenerateTrip.generate_trip(locations)
+    optimal_locations = GenerateTrip.generate_trip(locations)
+    puts 'derp hard!!!!!!!', optimal_locations
   end
 end
