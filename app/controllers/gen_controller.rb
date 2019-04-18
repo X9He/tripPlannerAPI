@@ -8,6 +8,6 @@ class GenController < ApplicationController
     puts 'in generate'
     locations = JSON.parse(request.body.string)['locations']
     optimal_locations = GenerateTrip.generate_trip(locations)
-    puts 'derp hard!!!!!!!', optimal_locations
+    render :json => optimal_locations
   end
 end

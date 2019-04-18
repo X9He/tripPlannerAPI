@@ -38,6 +38,7 @@ module GenerateTrip
         puts res['route']['realTime']
         array_of_routes.push(res)
         routes_hash[loc1 + loc2] = res['route']['realTime']
+        routes_hash[loc2 + loc1] = res['route']['realTime']
         # locations_hash[tourist_locations[i] + ',' + tourist_locations[j]] = res
       end
     end

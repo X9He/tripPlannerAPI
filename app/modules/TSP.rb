@@ -1,12 +1,16 @@
 module TSP
   def self.get_travel_time(hash_of_routes, route, starting_address)
-    puts 'printing the stuff in get_travel_time'
-    puts starting_address, route[0]
+    # puts 'printing the stuff in get_travel_time'
+    # puts starting_address, route[0]
     from_start_to_next = starting_address + route[0]
     from_end_to_start = route[-1] + starting_address
-    puts hash_of_routes
+    # puts 'from_start_to_next is ', from_start_to_next
+    # puts 'from_end_to_start is ', from_end_to_start
+    # puts hash_of_routes
     start_cost = hash_of_routes[from_start_to_next]
     end_cost = hash_of_routes[from_end_to_start]
+    # puts 'start_cost is ', start_cost
+    # puts 'end_cost is ', end_cost
     total_cost = start_cost + end_cost
     route.each_with_index do |loc, pos|
       if pos < route.length - 1
