@@ -29,3 +29,5 @@
 
 # Ignore intellij
 .idea/
+.env
+
